@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, OneToMany } from "typeorm";
+import { Image } from "./images.entity";
+import { MovieActor } from "./movie-actor.entity";
 
 @Entity()
 export class Actor{
@@ -14,6 +16,10 @@ export class Actor{
   @Column()
   sex: string;
 
-  @Column()
-  imageId: number;
+  @OneToMany(() => MovieActor, movieActor => movieActor.movie)
+  movies: MovieActor[];
+
+  @OneToOne(() => Image)
+  @JoinColumn()
+  image: Image;
 }
