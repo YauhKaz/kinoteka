@@ -12,11 +12,11 @@ export class Movie{
   description: string;
 
   @Column()
-  createAt: string;
+  createAt: Date;
 
   @Column()
-  updateAt: string;
+  updateAt: Date;
 
   @Column()
-  year: string;
+  year: number;
 }

@@ -8,12 +8,18 @@ import { Actor } from "./entities/actors.entity";
 import { MovieActor } from "./entities/movie-actor.entity";
 import { MovieCategory } from "./entities/movie-category.entity";
 import { MovieImage } from "./entities/movie-image.entity";
+import { MovieService } from "./services/movies.service";
+import { ActorService } from "./services/actor.service";
+import { ActorController } from "./controllers/actor.controller";
+import { CategoryService } from "./services/category.service";
+import { CategoryController } from "./controllers/category.controller";
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Movie, Actor, Category, Image, MovieActor, MovieCategory, MovieImage])
   ],
-  controllers: [ MovieController ]
+  controllers: [ MovieController, ActorController, CategoryController ],
+  providers: [ MovieService, ActorService, CategoryService ]
 })
 
 export class MovieModule {}
