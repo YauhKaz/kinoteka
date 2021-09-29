@@ -13,13 +13,15 @@ import { ActorService } from "./services/actor.service";
 import { ActorController } from "./controllers/actor.controller";
 import { CategoryService } from "./services/category.service";
 import { CategoryController } from "./controllers/category.controller";
+import { ImageController } from "./controllers/image.controller";
+import { ImageService } from "./services/image.service";
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Movie, Actor, Category, Image, MovieActor, MovieCategory, MovieImage])
   ],
-  controllers: [ MovieController, ActorController, CategoryController ],
-  providers: [ MovieService, ActorService, CategoryService ]
+  controllers: [ MovieController, ActorController, CategoryController, ImageController ],
+  providers: [ MovieService, ActorService, CategoryService, ImageService ]
 })
 
 export class MovieModule {}
