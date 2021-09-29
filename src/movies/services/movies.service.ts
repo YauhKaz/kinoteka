@@ -11,26 +11,26 @@ export class MovieService {
     private movieRepository: Repository<Movie>,
   ) {}
 
-  getAll() {
-    return this.movieRepository.find();
+  async getAll() {
+    return await this.movieRepository.find({relations: ['image', 'actor', 'category']});
   }
 
-  getOne(id: number) {
-    return this.movieRepository.findOne({where: {id: id}});
+  async getOne(id: number) {
+    return await this.movieRepository.findOne({where: {id: id}});
   }
 
-  create(movieDto: CreateMovieDto) {
+  async create(movieDto: CreateMovieDto) {
     const movie = this.movieRepository.create(movieDto);
-    this.movieRepository.save(movieDto);
+    await this.movieRepository.save(movieDto);
     return movie;
   }
 
-  update(movieDto: CreateMovieDto, id: number) {
-    this.movieRepository.update({id}, movieDto);
-    return this.movieRepository.findOne({id});
+  async update(movieDto: CreateMovieDto, id: number) {
+    await this.movieRepository.update({id}, movieDto);
+    return await this.movieRepository.findOne({id});
   }
 
-  delete(id: number) {
-    return this.movieRepository.delete({id});
+  async delete(id: number) {
+    return await this.movieRepository.delete({id});
   }
 }
