@@ -18,7 +18,7 @@ import { ImageService } from "./services/image.service";
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Movie, Actor, Category, Image, MovieActor, MovieCategory, MovieImage])
+    TypeOrmModule.forFeature([Movie, Actor, Category, Image])
   ],
   controllers: [ MovieController, ActorController, CategoryController, ImageController ],
   providers: [ MovieService, ActorService, CategoryService, ImageService ]

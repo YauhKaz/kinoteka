@@ -13,9 +13,9 @@ export class MovieCategory{
   @Column()
   categoryId: number;
 
-  @ManyToOne(() => Movie, movie => movie.category)
-  movie: Movie;
+  // @ManyToOne(() => Movie, movie => movie.category)
+  // movie: Movie;
 
-  @ManyToOne(() => Category, category => category.movie)
-  category: Category;
+  // @ManyToOne(() => Category, category => category.movie)
+  // category: Category;
 }

@@ -1,5 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
-import { MovieImage } from "./movie-image.entity";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from "typeorm";
+import { Movie } from "./movies.entity";
 
 @Entity()
 export class Image{
@@ -12,6 +12,7 @@ export class Image{
   @Column()
   url: string;
 
-  @OneToMany(() => MovieImage, movieImage => movieImage.movie)
-  movie: MovieImage[];
+  @ManyToMany(() => Movie, movie => movie.image)
+  // @JoinTable()
+  movie: Movie[];
 }

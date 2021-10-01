@@ -1,5 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
-import { MovieCategory } from "./movie-category.entity";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from "typeorm";
+import { Movie } from "./movies.entity";
 
 @Entity()
 export class Category{
@@ -12,6 +12,7 @@ export class Category{
   @Column()
   description: string;
 
-  @OneToMany(() => MovieCategory, movieCategory => movieCategory.movie)
-  movie: MovieCategory[];
+  @ManyToMany(() => Movie, movie => movie.category)
+  // @JoinTable()
+  movie: Movie[];
 }

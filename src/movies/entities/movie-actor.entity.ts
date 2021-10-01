@@ -13,9 +13,9 @@ export class MovieActor{
   @Column()
   actorId: number;
 
-  @ManyToOne(() => Movie, movie => movie.actor)
-  movie: Movie;
+  // @ManyToOne(() => Movie, movie => movie.actor)
+  // movie: Movie;
 
-  @ManyToOne(() => Actor, actor => actor.movie)
-  actor: Actor;
+  // @ManyToOne(() => Actor, actor => actor.movie)
+  // actor: Actor;
 }

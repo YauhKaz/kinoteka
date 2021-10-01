@@ -13,9 +13,9 @@ export class MovieImage{
   @Column()
   imageId: number;
 
-  @ManyToOne(() => Movie, movie => movie.image)
-  movie: Movie;
+  // @ManyToOne(() => Movie, movie => movie.image)
+  // movie: Movie;
 
-  @ManyToOne(() => Image, image => image.movie)
-  image: Image;
+  // @ManyToOne(() => Image, image => image.movie)
+  // image: Image;
 }
