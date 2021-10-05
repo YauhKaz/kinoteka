@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { Movie } from './movies.entity';
 
 @Entity()
@@ -12,6 +12,6 @@ export class Image {
   @Column()
   url: string;
 
-  @ManyToMany(() => Movie, (movie) => movie.images)
-  movies: Movie[];
+  @ManyToOne(() => Movie, (movie) => movie.images)
+  movie: Movie;
 }

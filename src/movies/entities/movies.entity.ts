@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   ManyToMany,
   JoinTable,
+  OneToMany,
 } from 'typeorm';
 import { Image } from './images.entity';
 import { Category } from './categories.entity';
@@ -29,12 +30,11 @@ export class Movie {
   @Column()
   year: number;
 
-  @ManyToMany(() => Image, (image) => image.movies, {
+  @OneToMany(() => Image, (image) => image.movie, {
     eager: true,
     cascade: true,
   })
-  @JoinTable()
-  images?: Image[];
+  images: Image[];
 
   @ManyToMany(() => Category, (category) => category.movies, {
     eager: true,
