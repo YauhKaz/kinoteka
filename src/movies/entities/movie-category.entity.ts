@@ -1,9 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
-import { Category } from "./categories.entity";
-import { Movie } from "./movies.entity";
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class MovieCategory{
+export class MovieCategory {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -12,10 +10,4 @@ export class MovieCategory{
 
   @Column()
   categoryId: number;
-
-  // @ManyToOne(() => Movie, movie => movie.category)
-  // movie: Movie;
-
-  // @ManyToOne(() => Category, category => category.movie)
-  // category: Category;
 }

@@ -1,10 +1,16 @@
-import { Entity, Column, PrimaryGeneratedColumn, JoinTable, ManyToMany } from "typeorm";
-import { Image } from "./images.entity"
-import { Category } from "./categories.entity"
-import { Actor } from "./actors.entity"
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  JoinTable,
+  ManyToMany,
+} from 'typeorm';
+import { Image } from './images.entity';
+import { Category } from './categories.entity';
+import { Actor } from './actors.entity';
 
 @Entity()
-export class Movie{
+export class Movie {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -23,15 +29,24 @@ export class Movie{
   @Column()
   year: number;
 
-  @ManyToMany(() => Image, image => image.movie, {eager: true})
+  @ManyToMany(() => Image, (image) => image.movies, {
+    eager: true,
+    cascade: true,
+  })
   @JoinTable()
-  image: Image[];
+  images: Image[];
 
-  @ManyToMany(() => Category, category => category.movie, {eager: true})
+  @ManyToMany(() => Category, (category) => category.movies, {
+    eager: true,
+    cascade: true,
+  })
   @JoinTable()
-  category: Category[];
+  categories: Category[];
 
-  @ManyToMany(() => Actor, actor => actor.movie, {eager: true})
+  @ManyToMany(() => Actor, (actor) => actor.movies, {
+    eager: true,
+    cascade: true,
+  })
   @JoinTable()
-  actor: Actor[];
+  actors: Actor[];
 }

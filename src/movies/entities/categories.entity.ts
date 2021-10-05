@@ -1,8 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from "typeorm";
-import { Movie } from "./movies.entity";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import { Movie } from './movies.entity';
 
 @Entity()
-export class Category{
+export class Category {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -12,7 +12,7 @@ export class Category{
   @Column()
   description: string;
 
-  @ManyToMany(() => Movie, movie => movie.category)
+  @ManyToMany(() => Movie, (movie) => movie.categories)
   // @JoinTable()
-  movie: Movie[];
+  movies: Movie[];
 }

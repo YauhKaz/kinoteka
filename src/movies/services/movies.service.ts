@@ -1,11 +1,9 @@
-import { Injectable} from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { CreateMovieDto } from "../dto/create-movie.dto";
-import { Movie } from "../entities/movies.entity";
-import { ImageService } from "./image.service";
-import { ActorService } from "./actor.service";
-import { CategoryService } from "./category.service";
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { CreateMovieDto } from '../dto/create-movie.dto';
+import { Movie } from '../entities/movies.entity';
+import { ImageService } from './image.service';
 
 @Injectable()
 export class MovieService {
@@ -13,8 +11,6 @@ export class MovieService {
     @InjectRepository(Movie)
     private movieRepository: Repository<Movie>,
     private imageService: ImageService,
-    private actorService: ActorService,
-    private categoryService: CategoryService,
   ) {}
 
   async getAll() {
@@ -22,26 +18,32 @@ export class MovieService {
   }
 
   async getOne(id: number) {
-    return await this.movieRepository.findOne({where: {id: id}});
+    return await this.movieRepository.findOne({ where: { id: id } });
   }
 
   async create(movieDto: CreateMovieDto) {
     const movie = await this.movieRepository.create(movieDto);
-    const image = movie.image;
-    const actor = movie.actor;
-    const category = movie.category;
-    await image.map(item => this.imageService.create(item)); 
-    await category.map(item => this.categoryService.create(item)); 
-    //await actor.map(item => this.actorService.create(item)); //<- question with imageId
-    return await this.movieRepository.save(movieDto);
+    const createMovie = await this.movieRepository.save(movie);
+    return this.movieRepository.findOne(createMovie.id);
   }
 
   async update(movieDto: CreateMovieDto, id: number) {
-    await this.movieRepository.update({id}, movieDto);
-    return await this.movieRepository.findOne({id});
+    const updateMovie = await this.movieRepository.findOne({
+      where: { id: id },
+    });
+    await this.movieRepository.update({ id: id }, movieDto);
+    // updateMovie.images.forEach(
+    //   async (item) => await this.imageService.update(item, item.id),
+    // );
+    return updateMovie.images;
   }
 
-  async delete(id: number) {
-    return await this.movieRepository.delete({id});
+  async destroy(id: number) {
+    const deleteMovie = await this.movieRepository.findOne({
+      where: { id: id },
+    });
+    await this.movieRepository.remove(deleteMovie);
+    //await deleteMovie.images.map((item) => this.imageService.destroy(item.id));
+    return { deleted: true };
   }
 }

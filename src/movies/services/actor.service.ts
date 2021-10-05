@@ -1,8 +1,8 @@
-import { All, Injectable} from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { CreateActorDto } from "../dto/create-actor.dto";
-import { Actor } from "../entities/actors.entity";
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { CreateActorDto } from '../dto/create-actor.dto';
+import { Actor } from '../entities/actors.entity';
 
 @Injectable()
 export class ActorService {
@@ -12,11 +12,11 @@ export class ActorService {
   ) {}
 
   async getAll() {
-    return await this.actorRepository.find({relations: ['image']});
+    return await this.actorRepository.find();
   }
 
   async getOne(id: number) {
-    return await this.actorRepository.findOne({where: {id: id}});
+    return await this.actorRepository.findOne({ where: { id: id } });
   }
 
   async create(actorDto: CreateActorDto) {
@@ -26,11 +26,23 @@ export class ActorService {
   }
 
   async update(actorDto: CreateActorDto, id: number) {
-    await this.actorRepository.update({id}, actorDto);
-    return await this.actorRepository.findOne({id});
+    await this.actorRepository.update(
+      { id: actorDto.id },
+      {
+        name: actorDto.name,
+        dob: actorDto.dob,
+        sex: actorDto.sex,
+        // imageId: actorDto.imageId,
+      },
+    );
+    return await this.actorRepository.findOne({ id });
   }
 
-  async delete(id: number) {
-    return await this.actorRepository.delete({id});
+  async destroy(id: number) {
+    const deleteActor = await this.actorRepository.findOne({
+      where: { id: id },
+    });
+    await this.actorRepository.remove(deleteActor);
+    return { deleted: true };
   }
 }

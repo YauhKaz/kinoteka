@@ -1,13 +1,18 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
-import { CreateImageDto } from "../dto/create-image.dto";
-import { ImageService } from "../services/image.service";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
+import { CreateImageDto } from '../dto/create-image.dto';
+import { ImageService } from '../services/image.service';
 
 @Controller('image')
 export class ImageController {
-
-  constructor(private categoryImage: ImageService) {
-
-  }
+  constructor(private categoryImage: ImageService) {}
 
   @Get()
   async getAll() {
@@ -25,12 +30,15 @@ export class ImageController {
   }
 
   @Put(':id')
-  async update(@Body() updateImageDto: CreateImageDto, @Param('id') id:number) {
+  async update(
+    @Body() updateImageDto: CreateImageDto,
+    @Param('id') id: number,
+  ) {
     return await this.categoryImage.update(updateImageDto, id);
   }
 
   @Delete(':id')
-  async delete(@Param ('id') id:number) {
-    return await this.categoryImage.delete(id);
+  async delete(@Param('id') id: number) {
+    return await this.categoryImage.destroy(id);
   }
 }

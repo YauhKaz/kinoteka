@@ -1,9 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
-import { Image } from "./images.entity";
-import { Movie } from "./movies.entity";
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class MovieImage{
+export class MovieImage {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -12,10 +10,4 @@ export class MovieImage{
 
   @Column()
   imageId: number;
-
-  // @ManyToOne(() => Movie, movie => movie.image)
-  // movie: Movie;
-
-  // @ManyToOne(() => Image, image => image.movie)
-  // image: Image;
 }

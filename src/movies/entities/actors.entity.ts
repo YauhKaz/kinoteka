@@ -1,9 +1,16 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, ManyToMany, JoinTable } from "typeorm";
-import { Image } from "./images.entity";
-import { Movie } from "./movies.entity";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  JoinColumn,
+  ManyToMany,
+} from 'typeorm';
+import { Image } from './images.entity';
+import { Movie } from './movies.entity';
 
 @Entity()
-export class Actor{
+export class Actor {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -14,13 +21,19 @@ export class Actor{
   dob: Date;
 
   @Column()
-  sex: string;
+  sex: 'male' | 'female';
 
-  @ManyToMany(() => Movie, movie => movie.actor)
+  @Column()
+  photoUrl: string;
+
+  @ManyToMany(() => Movie, (movie) => movie.actors)
   // @JoinTable()
-  movie: Movie[];
+  movies: Movie[];
 
-  @OneToOne(() => Image)
-  @JoinColumn()
-  image: Image;
+  // @OneToOne(() => Image, {
+  //   cascade: true,
+  //   onDelete: 'RESTRICT',
+  // })
+  // @JoinColumn()
+  // image: Image;
 }
