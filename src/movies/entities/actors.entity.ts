@@ -1,9 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, OneToMany } from "typeorm";
-import { Image } from "./images.entity";
-import { MovieActor } from "./movie-actor.entity";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
+import { Movie } from './movies.entity';
 
 @Entity()
-export class Actor{
+export class Actor {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -16,10 +15,9 @@ export class Actor{
   @Column()
   sex: string;
 
-  @OneToMany(() => MovieActor, movieActor => movieActor.movie)
-  movies: MovieActor[];
+  @Column()
+  photoUrl: string;
 
-  @OneToOne(() => Image)
-  @JoinColumn()
-  image: Image;
+  @ManyToMany(() => Movie, (movie) => movie.actors)
+  movies: Movie[];
 }

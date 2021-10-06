@@ -2,8 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppService } from './app.service';
-import { MovieModule } from './movies/movies.module'
-import { MovieService } from './movies/services/movies.service'
+import { MovieModule } from './movies/movies.module';
 
 @Module({
   imports: [
