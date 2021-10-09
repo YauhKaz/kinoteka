@@ -1,7 +1,8 @@
 import { Controller } from '@nestjs/common';
-import { Crud, CrudController } from '@nestjsx/crud';
+import { Crud, CrudAuth, CrudController } from '@nestjsx/crud';
 import { Movie } from '../entities/movies.entity';
 import { MovieService } from '../services/movie.service';
+// import { User } from '../../users/users.service';
 
 @Crud({
   model: {
@@ -30,6 +31,13 @@ import { MovieService } from '../services/movie.service';
       },
     },
   },
+})
+@CrudAuth({
+  property: 'user',
+  filter: (user) => ({
+    id: user.userId,
+    isAdmin: true,
+  }),
 })
 @Controller('movies')
 export class MovieController implements CrudController<Movie> {
