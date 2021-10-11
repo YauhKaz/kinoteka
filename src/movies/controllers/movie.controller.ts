@@ -9,6 +9,7 @@ import {
   ParsedRequest,
 } from '@nestjsx/crud';
 import { AdminAuthGuard } from 'src/auth/admin.guard';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Movie } from '../entities/movies.entity';
 import { MovieService } from '../services/movie.service';
 
@@ -59,12 +60,14 @@ export class MovieController implements CrudController<Movie> {
   }
 
   @UseGuards(AdminAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Override()
   createOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: Movie) {
     return this.base.createOneBase(req, dto);
   }
 
   @UseGuards(AdminAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Override()
   createMany(
     @ParsedRequest() req: CrudRequest,
@@ -74,18 +77,21 @@ export class MovieController implements CrudController<Movie> {
   }
 
   @UseGuards(AdminAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Override('updateOneBase')
   coolFunction(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: Movie) {
     return this.base.updateOneBase(req, dto);
   }
 
   @UseGuards(AdminAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Override('replaceOneBase')
   awesomePUT(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: Movie) {
     return this.base.replaceOneBase(req, dto);
   }
 
   @UseGuards(AdminAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Override()
   async deleteOne(@ParsedRequest() req: CrudRequest) {
     return this.base.deleteOneBase(req);
