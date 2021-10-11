@@ -1,8 +1,16 @@
-import { Controller } from '@nestjs/common';
-import { Crud, CrudAuth, CrudController } from '@nestjsx/crud';
+import { Controller, UseGuards } from '@nestjs/common';
+import {
+  CreateManyDto,
+  Crud,
+  CrudController,
+  CrudRequest,
+  Override,
+  ParsedBody,
+  ParsedRequest,
+} from '@nestjsx/crud';
+import { AdminAuthGuard } from 'src/auth/admin.guard';
 import { Movie } from '../entities/movies.entity';
 import { MovieService } from '../services/movie.service';
-// import { User } from '../../users/users.service';
 
 @Crud({
   model: {
@@ -32,14 +40,54 @@ import { MovieService } from '../services/movie.service';
     },
   },
 })
-@CrudAuth({
-  property: 'user',
-  filter: (user) => ({
-    id: user.userId,
-    isAdmin: true,
-  }),
-})
 @Controller('movies')
 export class MovieController implements CrudController<Movie> {
   constructor(public service: MovieService) {}
+
+  get base(): CrudController<Movie> {
+    return this;
+  }
+
+  @Override()
+  getMany(@ParsedRequest() req: CrudRequest) {
+    return this.base.getManyBase(req);
+  }
+
+  @Override('getOneBase')
+  getOneAndDoStuff(@ParsedRequest() req: CrudRequest) {
+    return this.base.getOneBase(req);
+  }
+
+  @UseGuards(AdminAuthGuard)
+  @Override()
+  createOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: Movie) {
+    return this.base.createOneBase(req, dto);
+  }
+
+  @UseGuards(AdminAuthGuard)
+  @Override()
+  createMany(
+    @ParsedRequest() req: CrudRequest,
+    @ParsedBody() dto: CreateManyDto<Movie>,
+  ) {
+    return this.base.createManyBase(req, dto);
+  }
+
+  @UseGuards(AdminAuthGuard)
+  @Override('updateOneBase')
+  coolFunction(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: Movie) {
+    return this.base.updateOneBase(req, dto);
+  }
+
+  @UseGuards(AdminAuthGuard)
+  @Override('replaceOneBase')
+  awesomePUT(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: Movie) {
+    return this.base.replaceOneBase(req, dto);
+  }
+
+  @UseGuards(AdminAuthGuard)
+  @Override()
+  async deleteOne(@ParsedRequest() req: CrudRequest) {
+    return this.base.deleteOneBase(req);
+  }
 }
