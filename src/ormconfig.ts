@@ -3,13 +3,16 @@ import { Movie } from './movies/entities/movies.entity';
 import { Category } from './movies/entities/categories.entity';
 import { Image } from './movies/entities/images.entity';
 
+const types = process.env.TYPEORM_CONNECTION;
+console.log(types);
+
 export default {
   type: 'mysql',
   host: 'localhost',
   port: 3306,
   username: 'root',
-  password: 'root',
-  database: 'mytestdb',
+  password: '6Hjof8TT',
+  database: 'kinoteka',
   autoLoadEntities: false,
   synchronize: false,
 
