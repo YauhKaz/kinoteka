@@ -1,28 +1,23 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppService } from './app.service';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { MovieModule } from './movies/movies.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { ConfigModule } from '@nestjs/config';
+import ormconfig from './ormconfig';
+
+const types = process.env.TYPEORM_CONNECTION;
+console.log(types);
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '6Hjof8TT',
-      database: 'kinoteka',
-      autoLoadEntities: true,
-      synchronize: true,
-    }),
+    ConfigModule.forRoot(),
+    TypeOrmModule.forRoot(ormconfig as TypeOrmModuleOptions),
     MovieModule,
     AuthModule,
     UsersModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
